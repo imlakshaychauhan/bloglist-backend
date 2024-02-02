@@ -3,10 +3,10 @@ const app = express();
 const cors = require("cors");
 const mongoose = require("mongoose");
 const Blog = require("./models/blog");
-require("dotenv").config();
+const config = require("./utils/config");
 
 mongoose
-  .connect(process.env.MONGODB_URI)
+  .connect(config.MONGODB_URI)
   .then((res) => {
     console.log("Database Connected");
   })
@@ -31,7 +31,7 @@ app.post("/api/blogs", (request, response) => {
   });
 });
 
-const PORT = process.env.PORT || 3003;
+const PORT = config.PORT || 3003;
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });
