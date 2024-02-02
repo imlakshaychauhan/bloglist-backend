@@ -4,18 +4,19 @@ const cors = require("cors");
 const mongoose = require("mongoose");
 const Blog = require("./models/blog");
 const config = require("./utils/config");
+const logger = require("./utils/logger");
+
+app.use(cors());
+app.use(express.json());
 
 mongoose
   .connect(config.MONGODB_URI)
   .then((res) => {
-    console.log("Database Connected");
+    logger.info("Database Connected");
   })
   .catch((err) => {
-    console.log(err);
+    logger.error(err);
   });
-
-app.use(cors());
-app.use(express.json());
 
 app.get("/api/blogs", (request, response) => {
   Blog.find({}).then((blogs) => {
@@ -25,7 +26,6 @@ app.get("/api/blogs", (request, response) => {
 
 app.post("/api/blogs", (request, response) => {
   const blog = new Blog(request.body);
-
   blog.save().then((result) => {
     response.status(201).json(result);
   });
@@ -33,5 +33,5 @@ app.post("/api/blogs", (request, response) => {
 
 const PORT = config.PORT || 3003;
 app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
+  logger.info(`Server running on port ${PORT}`);
 });
