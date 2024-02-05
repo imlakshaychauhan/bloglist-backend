@@ -74,4 +74,20 @@ describe("Helper", () => {
       __v: 0,
     });
   });
+
+  test("author with most blogs", () => {
+    const result = list_helper.mostBlogs(blogs);
+    expect(result).toEqual({
+      author: "Robert C. Martin",
+      blogs: 3,
+    });
+  });
+
+  test("author with most likes", () => {
+    const result = list_helper.mostLikes(blogs);
+    expect(result).toEqual({
+      author: "Edsger W. Dijkstra",
+      likes: 17,
+    });
+  });
 });
